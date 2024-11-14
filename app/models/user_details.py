@@ -1,6 +1,4 @@
-from datetime import datetime
-
-from sqlalchemy import Column, Integer, Float, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from app.models import Base
 
@@ -15,7 +13,6 @@ class UserDetail(Base):
     location_id = Column(Integer, ForeignKey('locations.id', ondelete="SET NULL"), nullable=True)
     device_id = Column(Integer, ForeignKey('device_info.id', ondelete="SET NULL"), nullable=True)
 
-    # Relationships
     location = relationship("Location", back_populates="user_detail")
     device = relationship("DeviceInfo", back_populates="user_detail")
     explosive_sentences = relationship("ExplosiveSentence", back_populates="user_detail", cascade="all, delete-orphan")

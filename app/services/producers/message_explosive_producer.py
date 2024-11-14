@@ -1,5 +1,4 @@
 import os
-
 from dotenv import load_dotenv
 
 from app.kafka_setting.producer import create_producer, producer_send_message

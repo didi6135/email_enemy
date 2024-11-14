@@ -1,4 +1,3 @@
-# app/models/device_info.py
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 
@@ -13,5 +12,4 @@ class DeviceInfo(Base):
     os = Column(String(50), nullable=True)
     device_id = Column(String(255), unique=True, nullable=False)
 
-    # Relationship to UserDetail
     user_detail = relationship("UserDetail", back_populates="device")

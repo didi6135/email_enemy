@@ -4,7 +4,6 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import joinedload
 from app.models import UserDetail, ExplosiveSentence, HostageSentence
 from app.postgres_setting.config import session_maker
-from app.services.sentences_service import organize_sentences
 
 
 def format_sentences(sentences, sentence_type):
@@ -16,6 +15,8 @@ def format_sentences(sentences, sentence_type):
         for sentence in sentences
     ]
 
+
+
 def get_device_info(device):
     if not device:
         return None
@@ -24,6 +25,8 @@ def get_device_info(device):
         "os": device.os,
         "device_id": device.device_id
     }
+
+
 
 def get_location_info(location):
     if not location:
@@ -35,9 +38,10 @@ def get_location_info(location):
         "country": location.country
     }
 
+
+
 def get_detailed_suspicious_content_by_email(email):
     with session_maker() as session:
-        # Fetch user with joined tables
         user_data = (
             session.query(UserDetail)
             .options(
@@ -53,7 +57,6 @@ def get_detailed_suspicious_content_by_email(email):
         if not user_data:
             return {"error": "User not found"}
 
-        # Construct suspicious content, device info, and location details
         suspicious_content = {
             "explosive_sentences": format_sentences(user_data.explosive_sentences, "explosive"),
             "hostage_sentences": format_sentences(user_data.hostage_sentences, "hostage")
@@ -68,10 +71,6 @@ def get_detailed_suspicious_content_by_email(email):
             "suspicious_content": suspicious_content
         }
 
-# Example usage
-print(get_detailed_suspicious_content_by_email('wolfescott@example.net'))
-
-
 
 def get_most_common_word_in_each_type_of_sentences():
     try:
@@ -84,10 +83,10 @@ def get_most_common_word_in_each_type_of_sentences():
                             [sentence.content for sentence in hostage_sentences]
 
             all_text = " ".join(all_sentences).lower().split()
-            most_common_word = Counter(all_text).most_common(1)
+            most_common_word = Counter(all_text).most_common()
 
             return {
-                "most_common_word": most_common_word[0] if most_common_word else None
+                "most_common_word": most_common_word if most_common_word else None
             }
 
     except SQLAlchemyError as e:
@@ -95,4 +94,3 @@ def get_most_common_word_in_each_type_of_sentences():
         return None
 
 
-print(get_most_common_word_in_each_type_of_sentences())

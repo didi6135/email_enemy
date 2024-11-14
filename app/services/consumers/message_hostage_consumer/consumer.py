@@ -4,7 +4,6 @@ from flask import Flask
 from kafka.errors import KafkaError
 
 from app.kafka_setting.consumer import create_consumer
-from app.services.consumers.all_messages_consumer.all_messages_repositroy import insert_new_email_message
 from app.services.consumers.message_hostage_consumer.message_hostage_repository import insert_all_data_hostage
 from app.services.sentences_service import organize_sentences
 

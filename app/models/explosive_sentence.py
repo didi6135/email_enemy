@@ -1,4 +1,3 @@
-# app/models/explosive_sentence.py
 from datetime import datetime
 from sqlalchemy import Column, Integer, Text, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
@@ -14,5 +13,4 @@ class ExplosiveSentence(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     content = Column(Text, nullable=True)
 
-    # Relationship to UserDetail (many-to-one)
     user_detail = relationship("UserDetail", back_populates="explosive_sentences")
