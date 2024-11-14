@@ -1,5 +1,8 @@
-from sqlalchemy import Column, Integer, Float, String, ForeignKey, Text
+# app/models/explosive_sentence.py
+from datetime import datetime
+from sqlalchemy import Column, Integer, Text, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
+
 from app.models import Base
 
 
@@ -7,8 +10,9 @@ class ExplosiveSentence(Base):
     __tablename__ = 'explosive_sentences'
 
     id = Column(Integer, primary_key=True, index=True)
-    email_id = Column(Integer, ForeignKey('emails.id', ondelete="CASCADE"))
+    user_detail_id = Column(Integer, ForeignKey('user_details.id', ondelete="CASCADE"))
+    created_at = Column(DateTime, default=datetime.utcnow)
     content = Column(Text, nullable=True)
 
-    # Relationship to Email (many-to-one)
-    email = relationship("Email", back_populates="explosive_sentences")
+    # Relationship to UserDetail (many-to-one)
+    user_detail = relationship("UserDetail", back_populates="explosive_sentences")

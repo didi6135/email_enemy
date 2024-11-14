@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Integer, Float, String
+# app/models/device_info.py
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+
 from app.models import Base
 
 
@@ -11,4 +13,5 @@ class DeviceInfo(Base):
     os = Column(String(50), nullable=True)
     device_id = Column(String(255), unique=True, nullable=False)
 
-    emails = relationship("Email", back_populates="device")
+    # Relationship to UserDetail
+    user_detail = relationship("UserDetail", back_populates="device")

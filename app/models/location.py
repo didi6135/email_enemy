@@ -13,4 +13,5 @@ class Location(Base):
     city = Column(String(100), nullable=True)
     country = Column(String(2), nullable=True)
 
-    emails = relationship("Email", back_populates="location")
+    # Relationship to UserDetail
+    user_detail = relationship("UserDetail", back_populates="location")
