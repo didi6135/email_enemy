@@ -15,9 +15,9 @@ app.register_blueprint(blueprint=all_emails, url_prefix='/api')
 app.register_blueprint(blueprint=suspicious_content, url_prefix='/api')
 
 if __name__ == "__main__":
-    # init_topics()
-    # reset_database()
-    # restart_mongo()
+    init_topics()
+    reset_database()
+    restart_mongo()
     app.run()
 
 
