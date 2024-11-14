@@ -9,9 +9,10 @@ from app.services.consumers.all_messages_consumer.all_messages_repositroy import
 app = Flask(__name__)
 
 new_consumer = create_consumer(
-    topic=os.environ['KAFKA_TOPIC_ALL_MESSAGES'],
+    topic=os.environ['KAFKA_TOPIC_EXPLOSIVE'],
     bootstrap_servers=os.environ['BOOTSTRAP_SERVERS'],
 )
+
 
 def consume_messages(consumer):
     if consumer:

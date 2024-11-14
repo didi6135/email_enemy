@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.register_blueprint(blueprint=all_emails)
 
 if __name__ == "__main__":
-    init_topics()
+    # init_topics()
     app.run()
+
 
