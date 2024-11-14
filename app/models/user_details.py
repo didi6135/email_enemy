@@ -15,5 +15,6 @@ class UserDetail(Base):
 
     location = relationship("Location", back_populates="user_detail")
     device = relationship("DeviceInfo", back_populates="user_detail")
+
     explosive_sentences = relationship("ExplosiveSentence", back_populates="user_detail", cascade="all, delete-orphan")
     hostage_sentences = relationship("HostageSentence", back_populates="user_detail", cascade="all, delete-orphan")
