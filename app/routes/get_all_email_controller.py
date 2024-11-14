@@ -7,7 +7,7 @@ from app.services.producers.message_hostage_producer import send_data_to_message
 
 all_emails = Blueprint('all_emails', __name__)
 
-@all_emails.route('/api/email', methods=['POST'])
+@all_emails.route('/email', methods=['POST'])
 def get_all_emails_controller():
     try:
         data = request.get_json()
