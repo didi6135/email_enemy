@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from flask import Flask
 
-from app.kafka_setting.init_topics import init_topics
+from app.mongo_setting.config import restart_mongo
 from app.postgres_setting.config import reset_database
 from app.routes.get_all_email_controller import all_emails
 
@@ -15,6 +15,7 @@ app.register_blueprint(blueprint=all_emails)
 if __name__ == "__main__":
     # init_topics()
     reset_database()
+    restart_mongo()
     app.run()
 
 

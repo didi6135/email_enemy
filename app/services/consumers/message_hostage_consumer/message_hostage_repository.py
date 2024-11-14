@@ -1,6 +1,6 @@
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.models import DeviceInfo, UserDetail, ExplosiveSentence
+from app.models import DeviceInfo, UserDetail, ExplosiveSentence, HostageSentence
 from app.models.location import Location
 from app.postgres_setting.config import session_maker
 
@@ -81,23 +81,23 @@ def insert_user_detail(user_data, location_id, device_id):
         return None
 
 
-def insert_explosive_sentence(user_detail_id, sentences):
+def insert_hostage_sentence(user_detail_id, sentences):
     try:
         with session_maker() as session:
             content = " ".join(sentences)
-            explosive_sentence = ExplosiveSentence(
+            hostage_sentence = HostageSentence(
                 user_detail_id=user_detail_id,
                 content=content
             )
-            session.add(explosive_sentence)
+            session.add(hostage_sentence)
             session.commit()
-            return explosive_sentence.id
+            return hostage_sentence.id
     except SQLAlchemyError as e:
-        print(f"An error occurred while inserting explosive sentence: {e}")
+        print(f"An error occurred while inserting hostage sentence: {e}")
         return None
 
 
-def insert_all_data_explosive(data):
+def insert_all_data_hostage(data):
     try:
         location_id = insert_location(data['location'])
         device_id = insert_device_info(data['device_info'])
@@ -112,7 +112,7 @@ def insert_all_data_explosive(data):
             print("Failed to insert user detail; aborting.")
             return None
 
-        insert_explosive_sentence(user_detail_id, data['sentences'])
+        insert_hostage_sentence(user_detail_id, data['sentences'])
         print("Data inserted successfully.")
         return user_detail_id
 
