@@ -104,40 +104,93 @@ services:
       CONNECT_LOG4J_APPENDER_STDOUT_LAYOUT_CONVERSIONPATTERN: "[%d] %p %X{connector.context}%m (%c:%L)%n"
       CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/confluent-hub-components,/data/connect-jars
 
+
   mongo:
     image: mongo:latest
     container_name: mongodb
     hostname: mongodb
     ports:
       - "27017:27017"
-    # environment:
-    #   MONGO_INITDB_ROOT_USERNAME: admin
-    #   MONGO_INITDB_ROOT_PASSWORD: password
-    # volumes:
-    #   - mongo-data:/data/db
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: admin
+#      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongo-data:/data/db
 
   postgres:
-    image: postgres:latest
-    container_name: postgres
-    hostname: postgres
-    ports:
-      - "5432:5432"
-    # environment:
-    #   POSTGRES_USER: admin
-    #   POSTGRES_PASSWORD: password
-    #   POSTGRES_DB: my_database
-    # volumes:
-    #   - postgres-data:/var/lib/postgresql/data
+      image: postgres:latest
+      container_name: postgres
+      hostname: postgres
+      ports:
+        - "5432:5432"
+#      environment:
+#        POSTGRES_USER: admin
+#        POSTGRES_PASSWORD: password
+#        POSTGRES_DB: email_enemy
+      volumes:
+        - postgres-data:/var/lib/postgresql/data
 
   cli-tools:
-    image: confluentinc/cp-kafka:6.1.1
-    container_name: cli-tools
-    entrypoint: "sleep infinity"
-    restart: always
+      image: confluentinc/cp-kafka:6.1.1
+      container_name: cli-tools
+      entrypoint: "sleep infinity"
+      restart: always
 
-# volumes:
-#   mongo-data:
-#   postgres-data:
+  app:
+    build:
+      context: app
+      dockerfile: Dockerfile
+    container_name: my_app
+    depends_on:
+      - postgres
+      - mongo
+      - broker0
+#    environment:
+#      POSTGRES_URL: postgresql://admin:password@postgres:5432/email_enemy
+#      MONGO_URL: mongodb://admin:password@mongodb:27017/email_enemy
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+
+volumes:
+  mongo-data:
+  postgres-data:
+
+#  mongo:
+#    image: mongo:latest
+#    container_name: mongodb
+#    hostname: mongodb
+#    ports:
+#      - "27017:27017"
+#    # environment:
+#    #   MONGO_INITDB_ROOT_USERNAME: admin
+#    #   MONGO_INITDB_ROOT_PASSWORD: password
+#    # volumes:
+#    #   - mongo-data:/data/db
+#
+#  postgres:
+#    image: postgres:latest
+#    container_name: postgres
+#    hostname: postgres
+#    ports:
+#      - "5432:5432"
+#    # environment:
+#    #   POSTGRES_USER: admin
+#    #   POSTGRES_PASSWORD: password
+#    #   POSTGRES_DB: my_database
+#    # volumes:
+#    #   - postgres-data:/var/lib/postgresql/data
+#
+#  cli-tools:
+#    image: confluentinc/cp-kafka:6.1.1
+#    container_name: cli-tools
+#    entrypoint: "sleep infinity"
+#    restart: always
+#
+## volumes:
+##   mongo-data:
+##   postgres-data:
 
 
 
