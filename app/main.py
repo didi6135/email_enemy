@@ -7,7 +7,7 @@ from app.postgres_setting.config import reset_database
 from app.routes.get_all_email_controller import all_emails
 from app.routes.suspicious_content_controller import suspicious_content
 
-load_dotenv()
+load_dotenv(verbose=True)
 
 app = Flask(__name__)
 

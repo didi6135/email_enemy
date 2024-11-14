@@ -1,6 +1,5 @@
 import string
 from collections import Counter
-from os.path import split
 
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import joinedload
@@ -79,6 +78,7 @@ def get_detailed_suspicious_content_by_email(email):
     except SQLAlchemyError as e:
         print(f"An error occurred while inserting all data: {e}")
         return None
+
 
 
 def get_most_common_word_in_each_type_of_sentences():
